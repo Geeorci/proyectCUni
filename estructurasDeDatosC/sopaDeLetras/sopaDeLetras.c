@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 struct letra
 {
     struct letra *R, *L, *Up, *Dn;
@@ -47,11 +48,12 @@ struct letra* ultimo(struct letra *last){
 }
 
 struct letra* creaSopa ( struct letra* primDeRenglon, struct letra* sigRenglon ){
-    struct letra *aux = primDeRenglon; int i = 0;
+    struct letra *aux = primDeRenglon; //int i = 0;
  if ( !primDeRenglon->Dn )    
    while ( aux ){
        aux->Dn = sigRenglon;
        sigRenglon->Up = aux;
+       sigRenglon = sigRenglon->R;
    aux = aux->R;
    }
  else{
@@ -59,6 +61,7 @@ struct letra* creaSopa ( struct letra* primDeRenglon, struct letra* sigRenglon )
      while ( aux ){
        aux->Dn = sigRenglon;
        sigRenglon->Up = aux;
+       sigRenglon = sigRenglon->R;
      aux = aux->R;
      }
  }  
@@ -85,15 +88,83 @@ void printSopa(struct letra *inicio){
 }
 
 char direc(struct letra *l, char letra){
-    if(l->L && c->L->letra == letra) return 'l';
-    if(l->R && c->R->letra == letra) return 'r';
-    if(l->Up && c->Up->letra == letra) return 'u';
-    if(l->Dn && c->Dn->letra == letra) return 'd';
+    if(l->L && l->L->letra == letra) return 'l';
+    if(l->R && l->R->letra == letra) return 'r';
+    if(l->Up && l->Up->letra == letra) return 'u';
+    if(l->Dn && l->Dn->letra == letra) return 'd';
 }
 
-struct letra* camino(struct letra *c, char direc, int sizePalabra){
-    if( direc == l)
-        if(c->letra == )
+void agrPalabra(struct letra *ini, int x, int y, char *palabra, char direccion){
+    struct letra *aux;
+    for( ini; ini; ini = ini->Dn){
+        for( aux = ini; aux; aux = aux->R )
+            if(aux->y == y && aux->x == x){
+                switch (direccion)
+                {
+                case 'l':
+                    while(strlen(palabra) > 0){
+                        if(strlen(palabra) == 1) aux->letra = *palabra;
+                        else{
+                            aux->letra = *palabra;
+                            if(!aux->L)printf("no hay espacio en la sopa.\n");
+                            else{
+                                aux = aux->L;
+                            } 
+                        }
+                     palabra++;       
+                    }
+                    break;
+                
+                case 'r':
+                 while(strlen(palabra) > 0){
+                        if(strlen(palabra) == 1) aux->letra = *palabra;
+                        else{
+                            aux->letra = *palabra;
+                            if(!aux->R)printf("no hay espacio en la sopa.\n");
+                            else{
+                                aux = aux->R;
+                            }    
+                        }
+                     palabra++;       
+                    }
+                    break;
+                case 'u':
+                    while(strlen(palabra) > 0){
+                        if(strlen(palabra) == 1) aux->letra = *palabra;
+                        else{
+                            aux->letra = *palabra;
+                            if(!aux->Up)printf("no hay espacio en la sopa.\n");
+                            else{
+                                aux = aux->Up;
+                            } 
+                        }    
+                     palabra++;       
+                    }
+
+                    break;
+                case 'd':
+                 while(strlen(palabra) > 0){
+                        if(strlen(palabra) == 1) aux->letra = *palabra;
+                        else{
+                            aux->letra = *palabra;
+                             if(!aux->Dn)printf("no hay espacio en la sopa.\n");
+                            else{
+                                aux = aux->Dn;
+                            } 
+                        }
+                     palabra++;       
+                    }
+                    break;        
+                }
+              //break;  
+            }
+    }
+}
+
+
+struct letra* camino(struct letra *c, char direc, int sizePalabra, char comparar){
+    if( direc == 'l')
+        if( c->letra == comparar ) c = c->L;
 } 
 
 void explorador(struct letra *inicio, char *palabra){
@@ -110,10 +181,10 @@ void explorador(struct letra *inicio, char *palabra){
                 // printf("Encontre la letra: %c, en x: %d, y: %d\n",caracter, aux->x, aux->y);
                  cpyp++; auxcar = *cpyp;
                  char direccion = direc( aux, auxcar);
-                 switch (direeccion)
+                 switch (direccion)
                  {
                  case 'l':
-                 camino();
+                    aux2 = camino(aux, direccion, 3, auxcar);
                  }
             }
         }    
@@ -134,8 +205,11 @@ int main(){
     i++;    
     }
     struct letra *aux = priSop;
-    printSopa(aux);
+    //printSopa(aux);
+    // aux = priSop;
+    // explorador(aux, palabra);
+    agrPalabra(aux, 2, 2, palabra, 'r');
     aux = priSop;
-    explorador(aux, palabra);
+    printSopa(aux);
     return 0;
 }
