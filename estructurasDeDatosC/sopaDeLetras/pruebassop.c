@@ -18,6 +18,6 @@ int main(){
     char caracter = *cpyp;
     printf("%c\n",caracter);
     printf("%c\n",*palabra);
-    
+    // hola
     return 0;
 }
