@@ -106,55 +106,45 @@ void agrPalabra(struct letra *ini, int x, int y, char *palabra, char direccion){
                         if(strlen(palabra) == 1) aux->letra = *palabra;
                         else{
                             aux->letra = *palabra;
-                            if(!aux->L)printf("no hay espacio en la sopa.\n");
-                            else{
-                                aux = aux->L;
-                            } 
+                            aux = aux->L; 
                         }
                      palabra++;       
                     }
-                    break;
+                break;
                 
                 case 'r':
                  while(strlen(palabra) > 0){
                         if(strlen(palabra) == 1) aux->letra = *palabra;
                         else{
                             aux->letra = *palabra;
-                            if(!aux->R)printf("no hay espacio en la sopa.\n");
-                            else{
-                                aux = aux->R;
-                            }    
+                            aux = aux->R;
+                               
                         }
                      palabra++;       
                     }
-                    break;
+                break;
+
                 case 'u':
                     while(strlen(palabra) > 0){
                         if(strlen(palabra) == 1) aux->letra = *palabra;
                         else{
                             aux->letra = *palabra;
-                            if(!aux->Up)printf("no hay espacio en la sopa.\n");
-                            else{
-                                aux = aux->Up;
-                            } 
+                            aux = aux->Up; 
                         }    
                      palabra++;       
                     }
+                break;
 
-                    break;
                 case 'd':
                  while(strlen(palabra) > 0){
                         if(strlen(palabra) == 1) aux->letra = *palabra;
                         else{
                             aux->letra = *palabra;
-                             if(!aux->Dn)printf("no hay espacio en la sopa.\n");
-                            else{
-                                aux = aux->Dn;
-                            } 
+                            aux = aux->Dn; 
                         }
                      palabra++;       
                     }
-                    break;        
+                break;        
                 }
               //break;  
             }
@@ -208,7 +198,7 @@ int main(){
     //printSopa(aux);
     // aux = priSop;
     // explorador(aux, palabra);
-    agrPalabra(aux, 2, 2, palabra, 'r');
+    agrPalabra(aux, 1, 1, palabra, 'r');
     aux = priSop;
     printSopa(aux);
     return 0;
