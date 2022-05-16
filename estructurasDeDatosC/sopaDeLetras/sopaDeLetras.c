@@ -9,8 +9,8 @@ struct letra
     int x, y;
 };
 int i=0, j=0;
-
-char caracter_aleatorio(){
+char c[1000];
+/*char caracter_aleatorio(){
     char letras[] = "abcdefghijklmnsropqtuvwxyz"; int numeroAleatorio, numeroAleatorioAcotado;
     srand(time(NULL));
     numeroAleatorio = rand();
@@ -18,6 +18,17 @@ char caracter_aleatorio(){
     char caracter = letras[numeroAleatorioAcotado];
     return caracter;
    
+}*/
+
+void numeroAleatorio(   int x   ){
+    int numAle, numAleAco;
+    char letras[] = "abcdefghijklmnsropqtuvwxyz";
+    srand(time(NULL));
+    for(i = 0; i<x; i++){
+        numAle = rand();
+        numAleAco = numAle%26;
+        c[i] = letras[numAleAco];  
+    }
 }
 
 struct letra* creaNodo(){
@@ -25,17 +36,18 @@ struct letra* creaNodo(){
     return new;    
 }
 
-
+int  k=0;
 struct letra* renglon ( int nivel, int limR ){
     struct letra *primRenglon = NULL, *aux = NULL;
     int i = 0;
     while ( i < limR){
-    struct letra *new = creaNodo(); new->letra = caracter_aleatorio(); new->x = i; new->y = nivel;
+    struct letra *new = creaNodo(); new->letra = /*caracter_aleatorio();*/c[k]; new->x = i; new->y = nivel;
         if( !primRenglon ) { primRenglon = new; aux = primRenglon; }
         else{
             aux->R = new; new->L = aux; aux = new;
         }
         i++;
+        k++;
     }
     return primRenglon;    
 }
@@ -183,10 +195,11 @@ void explorador(struct letra *inicio, char *palabra){
 }
 
 int main(){
-    int tam = 5;
+    int tam = 15;
+    numeroAleatorio((tam*tam));
     char *palabra = "hola";
     struct letra *vec[tam];
-    int i = 0;
+    i = 0;
     struct letra *priSop = NULL;
     while ( i < tam)
     {
@@ -198,7 +211,7 @@ int main(){
     //printSopa(aux);
     // aux = priSop;
     // explorador(aux, palabra);
-    agrPalabra(aux, 1, 1, palabra, 'r');
+    agrPalabra(aux, 1, 0, palabra, 'd');
     aux = priSop;
     printSopa(aux);
     return 0;
