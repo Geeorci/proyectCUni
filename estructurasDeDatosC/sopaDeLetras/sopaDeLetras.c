@@ -10,16 +10,6 @@ struct letra
 };
 int i=0, j=0;
 char c[1000];
-/*char caracter_aleatorio(){
-    char letras[] = "abcdefghijklmnsropqtuvwxyz"; int numeroAleatorio, numeroAleatorioAcotado;
-    srand(time(NULL));
-    numeroAleatorio = rand();
-    numeroAleatorioAcotado = numeroAleatorio % 26;
-    char caracter = letras[numeroAleatorioAcotado];
-    return caracter;
-   
-}*/
-
 void numeroAleatorio(   int x   ){
     int numAle, numAleAco;
     char letras[] = "abcdefghijklmnsropqtuvwxyz";
@@ -41,7 +31,7 @@ struct letra* renglon ( int nivel, int limR ){
     struct letra *primRenglon = NULL, *aux = NULL;
     int i = 0;
     while ( i < limR){
-    struct letra *new = creaNodo(); new->letra = /*caracter_aleatorio();*/c[k]; new->x = i; new->y = nivel;
+    struct letra *new = creaNodo(); new->letra = c[k]; new->x = i; new->y = nivel;
         if( !primRenglon ) { primRenglon = new; aux = primRenglon; }
         else{
             aux->R = new; new->L = aux; aux = new;
@@ -79,15 +69,6 @@ struct letra* creaSopa ( struct letra* primDeRenglon, struct letra* sigRenglon )
  }  
 return primDeRenglon;
 }     
-
-/*void imprimir (struct letra* prim ){
-        struct letra *aux = prim;
-        while ( aux ){
-            printf("%c\t",aux->letra);
-        aux = aux->R;
-        }
-        printf("\n\n");
-}*/
 
 void printSopa(struct letra *inicio){
     struct letra *copia = inicio;
@@ -157,8 +138,7 @@ void agrPalabra(struct letra *ini, int x, int y, char *palabra, char direccion){
                      palabra++;       
                     }
                 break;        
-                }
-              //break;  
+                }  
             }
     }
 }
@@ -177,10 +157,8 @@ void explorador(struct letra *inicio, char *palabra){
     char caracter = *palabra;
     for( copia; copia; copia = copia->Dn){
         for( aux = copia; aux; aux = aux->R ){
-            // printf("%d,%d\t",aux->x,aux->y);
             auxcar = *cpyp;
             if(auxcar == aux->letra){ 
-                // printf("Encontre la letra: %c, en x: %d, y: %d\n",caracter, aux->x, aux->y);
                  cpyp++; auxcar = *cpyp;
                  char direccion = direc( aux, auxcar);
                  switch (direccion)
@@ -208,9 +186,6 @@ int main(){
     i++;    
     }
     struct letra *aux = priSop;
-    //printSopa(aux);
-    // aux = priSop;
-    // explorador(aux, palabra);
     agrPalabra(aux, 1, 0, palabra, 'd');
     aux = priSop;
     printSopa(aux);
