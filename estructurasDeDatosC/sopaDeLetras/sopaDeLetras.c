@@ -10,7 +10,7 @@ struct letra
 };
 int i=0, j=0;
 char c[1000];
-void numeroAleatorio(   int x   ){
+void caracterAleatorio(   int x   ){
     int numAle, numAleAco;
     char letras[] = "abcdefghijklmnsropqtuvwxyz";
     srand(time(NULL));
@@ -174,7 +174,7 @@ void explorador(struct letra *inicio, char *palabra){
 
 int main(){
     int tam = 15;
-    numeroAleatorio((tam*tam));
+    caracterAleatorio((tam*tam));
     char *palabra = "hola";
     struct letra *vec[tam];
     i = 0;
