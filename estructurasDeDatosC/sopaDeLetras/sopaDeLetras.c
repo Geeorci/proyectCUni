@@ -80,19 +80,12 @@ void printSopa(struct letra *inicio){
     }  
 }
 
-char direc(struct letra *l, char letra){
-    if(l->L && l->L->letra == letra) return 'l';
-    if(l->R && l->R->letra == letra) return 'r';
-    if(l->Up && l->Up->letra == letra) return 'u';
-    if(l->Dn && l->Dn->letra == letra) return 'd';
-}
-
-void agrPalabra(struct letra *ini, int x, int y, char *palabra, char direccion){
+void agrPalabra(struct letra *ini, int x, int y, char *palabra, char dir){
     struct letra *aux;
     for( ini; ini; ini = ini->Dn){
         for( aux = ini; aux; aux = aux->R )
             if(aux->y == y && aux->x == x){
-                switch (direccion)
+                switch (dir)
                 {
                 case 'l':
                     while(strlen(palabra) > 0){
@@ -143,39 +136,53 @@ void agrPalabra(struct letra *ini, int x, int y, char *palabra, char direccion){
     }
 }
 
+char direc(struct letra *l, char *letra){
+    struct letra *aux = l; char *p = letra;
+    p++;
+        if(aux->L && aux->L->letra == *p) return 'l';   
+        if(aux->R && aux->R->letra == *p) return 'r';
+        if(aux->Up && aux->Up->letra == *p) return 'u';
+        if(aux->Dn && aux->Dn->letra == *p) return 'd';
+}
 
-struct letra* camino(struct letra *c, char direc, int sizePalabra, char comparar){
-    if( direc == 'l')
-        if( c->letra == comparar ) c = c->L;
-} 
+void donde(struct letra *e, char *letra){
+    char dir; char *p = letra;
+    dir = direc(e, p); int x,y; x=e->x; y=e->y;
+    p = letra; int z=0;
+    while(e->letra == *p){
+        p++; z = strlen(p);
+        if(dir == 'l'){ if(e->L && e->L->letra == *p) e=e->L;}
+        if(dir == 'r'){ if(e->R && e->R->letra == *p) e=e->R;}
+        if(dir == 'u'){ if(e->Up && e->Up->letra == *p) e=e->Up;}
+        if(dir == 'd'){ if(e->Dn && e->Dn->letra == *p) e=e->Dn;}
+    }
+    if(z == 0) printf("esta en x:%d y:%d direccion:%c\n", x, y, dir);
+}
 
-void explorador(struct letra *inicio, char *palabra){
-    struct letra *copia = inicio;
-    struct letra *aux, *aux2;
-    char auxcar;
-    char *cpyp = palabra;
-    char caracter = *palabra;
-    for( copia; copia; copia = copia->Dn){
-        for( aux = copia; aux; aux = aux->R ){
-            auxcar = *cpyp;
-            if(auxcar == aux->letra){ 
-                 cpyp++; auxcar = *cpyp;
-                 char direccion = direc( aux, auxcar);
-                 switch (direccion)
-                 {
-                 case 'l':
-                    aux2 = camino(aux, direccion, 3, auxcar);
-                 }
-            }
-        }    
-        printf("\n\n");        
+
+void camino(struct letra *c, char *letra){
+    struct letra *v[1000]; int k=0; int i = 0; int j = 0;
+    struct letra *aux; char *p =letra;
+    for(c;c;c=c->Dn){
+        for(aux = c;aux; aux = aux->R) if(aux->letra == *letra) {
+            v[i] = aux;
+            i++; k++;
+        }
+    }
+
+    while(j < k){
+        p=letra;
+        donde(v[j],p);
+        j++;
     }
 }
 
+
+
 int main(){
-    int tam = 15;
+    int tam = 13;
     caracterAleatorio((tam*tam));
-    char *palabra = "hola";
+    char *palabra = "hola", *cpy1 = palabra, *palabra2 = "mundo", *cpy2 = palabra2, *palabra3 = "estructura", *cpy3 = palabra3, *palabra4="datos", *cpy4 = palabra4;
     struct letra *vec[tam];
     i = 0;
     struct letra *priSop = NULL;
@@ -186,8 +193,19 @@ int main(){
     i++;    
     }
     struct letra *aux = priSop;
-    agrPalabra(aux, 1, 0, palabra, 'd');
-    aux = priSop;
+    agrPalabra(aux, 0, 0, palabra, 'd'); aux = priSop;
+    agrPalabra(aux, 9, 2, palabra2, 'l'); aux = priSop;
+    agrPalabra(aux, 0, 10, palabra3, 'r'); aux = priSop;
+    agrPalabra(aux, 6, 8, palabra4, 'd'); aux = priSop;
     printSopa(aux);
+    aux = priSop;
+    printf("'%s' ",palabra); camino(aux, cpy1);
+    aux = priSop;
+    printf("'%s' ",palabra2); camino(aux, cpy2);
+    aux = priSop;
+    printf("'%s' ",palabra3); camino(aux, cpy3);
+    aux = priSop;
+    printf("'%s' ",palabra4); camino(aux, cpy4);
+
     return 0;
 }

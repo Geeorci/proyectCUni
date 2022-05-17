@@ -36,3 +36,9 @@ int main(){
     
     return 0;
 }
+
+                                    /*if(strlen(p) == 0){ printf("x:%d  y:%d dir:%c\n",x,y,dir); break;}
+                                    if(dir == 'l'){ if(aux->L && aux->L->letra == *p) aux=aux->L;}
+                                    if(dir == 'r'){ if(aux->R && aux->R->letra == *p) aux=aux->R;}
+                                    if(dir == 'u'){ if(aux->Up && aux->Up->letra == *p) aux=aux->Up;}
+                                    if(dir == 'd'){ if(aux->Dn && aux->Dn->letra == *p) aux=aux->Dn;} */
