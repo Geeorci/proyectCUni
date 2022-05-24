@@ -59,15 +59,16 @@ void posorden(struct nodoArb *arbol){
 }
 
 void podar(struct nodoArb *arbol){
-    if(arbol->izq) podar(arbol->izq);
-     if(arbol){
-            if(arbol->Der == NULL && arbol->izq == NULL )
+    if(arbol){
+            if(arbol->Der == NULL && arbol->izq == NULL ){
                 if(arbol->num > arbol->rai->num)
-                    arbol->Der == NULL;
+                    arbol->rai->Der = NULL;
                 else
-                    arbol->izq == NULL;
-     }                
-    if(arbol->Der) podar(arbol->Der);                
+                    arbol->rai->izq = NULL;
+            }        
+    }
+    if(arbol->izq) podar(arbol->izq);                
+    if(arbol->Der) podar(arbol->Der);                 
 
 }
 int main(){
@@ -75,12 +76,6 @@ int main(){
     for(int i = 0; i < 5; i++){
         creaNdo(v[i]);
     }
-    preorden(raiz);
-    printf("\n");
-    inorden(raiz);
-    printf("\n");
-    posorden(raiz);
-    printf("\n");
     podar(raiz);
     inorden(raiz);
     return 0;
